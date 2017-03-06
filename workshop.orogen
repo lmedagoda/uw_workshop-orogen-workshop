@@ -1,0 +1,27 @@
+name "workshop"
+using_task_library "auv_control"
+
+deployment "control_chain" do
+
+    task("control_chain_acceleration_controller", "auv_control::AccelerationController").
+        periodic(0.01)
+    
+    task("control_chain_aligned_velocity_controller", "auv_control::PIDController").
+        periodic(0.01)
+    
+    task("control_chain_aligned_position_controller", "auv_control::PIDController").
+        periodic(0.01)
+
+    task("control_chain_world_to_aligned", "auv_control::WorldToAligned").
+        periodic(0.01)
+        
+    task("pose_cmd", "auv_control::ConstantCommand").
+        periodic(0.01)
+        
+    task("velocity_cmd", "auv_control::ConstantCommand").
+        periodic(0.01)
+
+    add_default_logger
+end
+
+
